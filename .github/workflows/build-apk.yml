@@ -23,7 +23,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-- name: 4. Instal Capacitor & Buat Proyek Android
+
+      - name: 4. Instal Capacitor & Buat Proyek Android
         run: |
           mkdir -p www
           cp -r *.html *.css *.js assets images www/ 2>/dev/null || true
@@ -31,12 +32,17 @@ jobs:
           npx cap init "GASMI Training Assistant" "com.gasmi.training" --web-dir=www
           npx cap add android
 
-      - name: 5. Compile Proyek Menjadi File APK
+      - name: 5. Kompilasi Proyek Menjadi File APK
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
+      - name: 6. Unggah File APK Siap Unduh
+        uses: actions/upload-artifact@v4
+        with:
+          name: GASMI-Training-Assistant-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
       - name: 6. Unggah File APK Siap Unduh
         uses: actions/upload-artifact@v4
         with:
