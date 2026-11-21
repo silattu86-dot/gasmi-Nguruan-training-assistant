@@ -1,7 +1,7 @@
 {
   "appId": "id.or.pagarnusa.gasmi.nguruan",
   "appName": "GASMI Training Assistant",
-  "webDir": "www",
+  "webDir": ".",
   "server": {
     "androidScheme": "https"
   },
