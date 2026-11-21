@@ -24,13 +24,22 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 4. Instal Capacitor & Buat Proyek Android
+     - name: 4. Instal Capacitor & Buat Proyek Android
         run: |
           mkdir -p www
           cp -r *.html *.css *.js assets images www/ 2>/dev/null || true
+          if [ ! -f www/index.html ]; then
+            first_html=$(find www -maxdepth 2 -name "*.html" | head -n 1)
+            if [ -n "$first_html" ]; then
+              cp "$first_html" www/index.html
+            else
+              echo "<!DOCTYPE html><html><head><meta charset='utf-8'><title>GASMI Training Assistant</title></head><body><h3>GASMI Training Assistant</h3></body></html>" > www/index.html
+            fi
+          fi
           npm install @capacitor/core @capacitor/cli @capacitor/android
           npx cap init "GASMI Training Assistant" "com.gasmi.training" --web-dir=www
           npx cap add android
+          npx cap sync android
 
       - name: 5. Kompilasi Proyek Menjadi File APK
         run: |
